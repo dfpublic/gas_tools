@@ -286,6 +286,7 @@ GoogleSheet.prototype.getLastRow = function () {
 GoogleSheet.prototype.map = function (callback) {
   var headers = this.headers;
   var numrows = this.sheet.getLastRow();
+  var results = [];
   for (var i = 1; i < numrows; i++) { // Start at 1 to exclude headers
     var row = this.rowAtIndex(i);
     var object = {};
@@ -296,7 +297,8 @@ GoogleSheet.prototype.map = function (callback) {
       object[key] = value;
     }
     //Callback
-    callback(object, i - 1);
-
+    var new_val = callback(object, i - 1);
+    results.push(new_val);
   }
+  return results;
 }
